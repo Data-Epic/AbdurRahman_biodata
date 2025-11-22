@@ -19,15 +19,55 @@ while True:
         print("Limit reached. Stopping input.")
         break
 
-    name = input("Enter name (or type 'STOP' to quit): ").strip()
+    # --- NAME VALIDATION ---
+    while True:
+        name = input("Enter name (or type 'STOP' to quit): ").strip()
+        
+        if name.lower() == "stop":
+            print("Stopping input...")
+            break
+        
+        if name == "":
+            print("Name cannot be empty.")
+        elif any(char.isdigit() for char in name):
+            print("Name cannot contain numbers.")
+        else:
+            break
+
     if name.lower() == "stop":
         break
 
-    age = int(input("Enter age: "))
-    gender = input("Enter gender: ")
+    # --- AGE VALIDATION ---
+    while True:
+        age_input = input("Enter age: ").strip()
 
+        if not age_input.isdigit():
+            print("Age must be a valid number.")
+            continue
+
+        age = int(age_input)
+        if age <= 0:
+            print("Age must be greater than 0.")
+        else:
+            break
+
+    # --- GENDER VALIDATION ---
+    while True:
+        gender = input("Enter gender (male/female/other): ").strip().lower()
+
+        if any(char.isdigit() for char in gender):
+            print("Gender cannot contain numbers.")
+            continue
+
+        if gender not in ["male", "female", "other"]:
+            print("Invalid gender. Choose male, female, or other.")
+        else:
+            break
+
+    # Categorize age
     category = age_category(age)
 
+    # Store in dictionary
     users_info[name] = [age, category, gender]
 
 print("\nFinal Output:")
